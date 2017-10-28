@@ -1,0 +1,54 @@
+<% action = (album.persisted? ? album_url(album) : albums_url) %>
+<!-- if album is already in database, action will lead to update, otherwise lead to create -->
+<% method = (album.persisted? ? :patch : :post) %>
+<% submit_text = (album.persisted? ? "Edit Album" : "Create Album") %>
+
+<form action="<%= action %>" method="post">
+  <input
+      type="hidden"
+      name="authenticity_token"
+      value="<%= form_authenticity_token %>">
+
+  <input type="hidden" name="_method" value="<%= method %>">
+
+  <label for="album_title">Title:</label>
+  <input id="album_title" type="text" name="album[title]" value="<%= album.title %>">
+  <br><br>
+
+  <label for="album_year">Year:</label>
+  <input id="album_year" type="text" name="album[year]" value="<%= album.year %>">
+  <br><br>
+
+  <label for="album_band">Band:</label>
+  <select id="album_band" name="album[band_id]">
+    <option default>-- Select a Band --</option>
+    <% Band.all.each do |band| %>
+      <option
+        <%= album.band_id == band.id ? "selected" : "" %>
+        value="<%= band.id %>" >
+        <%= band.name.upcase %>
+      </option>
+    <% end %>
+  </select>
+  <br><br>
+
+  
+  <input
+    type="radio"
+    name="album[style]"
+    value="studio"
+    id="style_studio"
+    <%= (album.style == "studio" || album.style.nil?) ? "checked" : "" %>>
+    <label for="style_studio">Studio</label>
+  <input
+    type="radio"
+    name="album[style]"
+    value="live"
+    id="style_live"
+    <%= album.style == "live" ? "checked" : "" %>>
+    <label for="style_live">Live</label>
+  <br><br>
+
+  <input type="submit" value="<%= submit_text %>">
+
+</form>

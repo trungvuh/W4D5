@@ -1,0 +1,13 @@
+<%= render 'shared/errors' %>
+<h3><%= @band.name %> Band</h3>
+<ul>
+  <h4>Albums:</h4>
+
+  <% @band.albums.each do |album| %>
+    <li><a href=" <%= album_url(album) %> "> <%= album.title %>, <%= album.year %>, <%= album.style %></a></li>
+  <% end %>
+</ul>
+
+<br><br>
+
+<a href=" <%= new_album_url %> ">Create new Album</a>

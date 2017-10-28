@@ -1,0 +1,9 @@
+<h1> Tracks </h1>
+
+<ul>
+  <% @tracks.each do |track| %>
+    <li><a href=" <%=track_url(track)%> "</a><%= track.title %> - <%= track.album.title %></li>
+  <% end %>
+</ul>
+
+<a href=" <%= new_track_url %> ">Create new track</a>

@@ -1,0 +1,14 @@
+<%= render 'shared/errors' %>
+<h3><%= @track.title %></h3>
+<ul>
+  <li>Number: <%= @track.ord %> </li>
+  <li>Type: <%= @track.t_type %> </li>
+  <li>Album: <%= @track.album.title %> </li>
+  <li>Lyrics: <%= @track.lyrics %> </li>
+</ul>
+
+<%= button_to "Edit", edit_track_url, method: :get %>
+<%= button_to "Delete", track_url(@track), method: :delete %>
+
+<br><br>
+<a href="<%= album_url(@track.album) %>"><%= @track.album.title %> Album</a>

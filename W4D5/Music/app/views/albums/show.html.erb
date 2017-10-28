@@ -1,0 +1,21 @@
+<%= render 'shared/errors' %>
+<h3><%= @album.title %></h3>
+<ul>
+  <li>Year: <%= @album.year %> </li>
+  <li>Style: <%= @album.style %> </li>
+  <li><a href="<%= band_url(@album.band) %>">Band: <%= @album.band.name %> </a></li>
+  <li> Tracks:
+    <ul>
+      <% @album.tracks.each do |track| %>
+        <li><a href=" <%= track_url(track) %> "> <%= track.title %></a></li>
+      <% end %>
+    </ul>
+  </li>
+</ul>
+
+<%= button_to "Edit", edit_album_url, method: :get %>
+<%= button_to "Delete", album_url(@album), method: :delete %>
+
+<br><br>
+
+<a href=" <%= new_track_url %> ">Create new Track</a>

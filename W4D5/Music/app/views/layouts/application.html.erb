@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Music</title>
+    <%= csrf_meta_tags %>
+
+    <%= stylesheet_link_tag    'application', media: 'all' %>
+    <%= javascript_include_tag 'application' %>
+  </head>
+
+  <header>
+    <input
+      type="hidden"
+      name="authenticity_token"
+      value="<%= form_authenticity_token %>">
+    <%= button_to "Home", root_url, method: :get %>
+
+    <br>
+
+    <% if logged_in? %>
+      <%= "Welcome, #{current_user[:email]}! " %>
+      <%= button_to "Log out", session_url , method: :delete  %>
+
+    <% else %>
+      <form action="<%= new_session_url %>" method="get">
+        <input type="submit"  value="Log in">
+      </form>
+      <%= button_to "Sign up", new_user_url, method: :get %>
+    <% end %>
+  </header>
+  <br><br>
+  
+  <body>
+    <%= yield %>
+  </body>
+
+  <br><br><br>
+
+  <footer>
+    ®Copyright by TV!
+  </footer>
+</html>

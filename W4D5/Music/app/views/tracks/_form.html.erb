@@ -1,0 +1,60 @@
+<% action = (track.persisted? ? track_url(track) : tracks_url) %>
+<!-- if track is already in database, action will lead to update, otherwise lead to create -->
+<% method = (track.persisted? ? :patch : :post) %>
+<% submit_text = (track.persisted? ? "Edit Track" : "Create Track") %>
+
+<form action="<%= action %>" method="post">
+  <input
+      type="hidden"
+      name="authenticity_token"
+      value="<%= form_authenticity_token %>">
+
+  <input type="hidden" name="_method" value="<%= method %>">
+
+  <label for="track_title">Title:</label>
+  <input id="track_title" type="text" name="track[title]" value="<%= track.title %>">
+  <br><br>
+
+  <label for="track_ord">Number:</label>
+  <input id="track_ord" type="text" name="track[ord]" value="<%= track.ord %>">
+  <br><br>
+
+  <label for="track_album">Album:</label>
+  <select id="track_album" name="track[album_id]">
+    <option default>-- Select a Album --</option>
+    <% Album.all.each do |album| %>
+      <option
+        <%= track.album_id == album.id ? "selected" : "" %>
+        value="<%= album.id %>" >
+        <%= album.title.upcase %>
+      </option>
+    <% end %>
+  </select>
+  <br><br>
+
+  <input
+    type="radio"
+    name="track[t_type]"
+    value="regular"
+    id="t_type_regular"
+    <%= (track.t_type == "regular" || track.t_type.nil?) ? "checked" : "" %>>
+    <label for="t_type_regular">Regular</label>
+  <input
+    type="radio"
+    name="track[t_type]"
+    value="bonus"
+    id="t_type_bonus"
+    <%= track.t_type == "bonus" ? "checked" : "" %>>
+    <label for="t_type_bonus">Bonus</label>
+  <br><br>
+
+  <label for="track_lyrics">
+    Lyrics:
+    <textarea id="track_lyrics" name="track[lyrics]"> <%= track.lyrics %> </textarea>
+  </label>
+
+  <br><br>
+
+  <input type="submit" value="<%= submit_text %>">
+
+</form>
