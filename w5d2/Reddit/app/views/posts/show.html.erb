@@ -1,0 +1,25 @@
+<h3>Title: <%= @post.title %></h3>
+<ul>
+  <li>Url: <a href="#"><%= @post.url %></a></li>
+  <li>Content: <%= @post.content %></li>
+  <li>posted by <%= @post.author.username %></li>
+
+  <br>
+  <b>Associated Sub</b>
+  <ul>
+    <% @post.subs.each do |s| %>
+      <li><%= link_to s.title, sub_url(s) %></li>
+    <% end %>
+  </ul>
+  <br>
+
+  <b>Comment:</b>
+  <% @post.comments.each do |comment| %>
+    <li><%= comment.content %></li>
+  <% end %>
+
+</ul>
+<br>
+
+<%= button_to "Add a Comment", new_post_comment_url(@post), method: :get %>
+<%= button_to "Edit your post", edit_post_url(@post), method: :get %>

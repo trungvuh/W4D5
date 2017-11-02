@@ -1,2 +1,54 @@
-<h1>Subs#show</h1>
-<p>Find me in app/views/subs/show.html.erb</p>
+<h3>Title: <%= @sub.title %></h3>
+
+<p><b>Description:</b> <%= @sub.description %></p>
+
+<br>
+<ul>
+  <% @sub.posts.each do |post| %>
+    <li>
+      <b><%= link_to post.title, post_url(post) %></b>
+      <span><%= post.content %></span>
+    </li>
+  <% end %>
+</ul>
+<br>
+
+<b>Add post</b>
+  <form action="<%= sub_posts_url(@sub) %>" method="post">
+
+    <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+    <br>
+    <label>Title
+      <input type="text" name="post[title]" value="">
+    </label>
+    <br><br>
+    <label>Url (optional)
+      <input type="text" name="post[url]" value="">
+    </label>
+    <br><br>
+
+    <% Sub.all.each do |s| %>
+      <label>
+        <input type="checkbox" name="post[sub_ids][]" value="<%= s.id %>">
+        <%= s.title %>
+      </label>
+      <br>
+    <% end %>
+
+    <input type="hidden" name="post[sub_id]" value="@sub.id">
+
+    <label>Content
+    <textarea name="post[content]" >
+
+    </textarea>
+    </label>
+    <br><br>
+
+    <input type="submit" value="Submit">
+
+  </form>
+
+
+<br>
+<%= button_to "Edit your sub", edit_sub_url(@sub), method: :get %>
+<%= button_to "Delete your sub", sub_url(@sub), method: :delete %>
